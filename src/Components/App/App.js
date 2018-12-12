@@ -13,16 +13,16 @@ class App extends Component {
       playlistName: 'Hello World',
       playlistTracks: [
         {
-          name: '',
-          artist: '',
-          album: '',
-          id: ''
+          name: 'Stronger',
+          artist: 'Britney Spears',
+          album: 'Oops!... I Did It Again',
+          id: '0'
         },
         {
-          name: '',
-          artist: '',
-          album: '',
-          id: ''
+          name: 'So Emotional',
+          artist: 'Whitney Houston',
+          album: 'Whitney',
+          id: '1'
         },
         {
           name: '',
@@ -54,6 +54,17 @@ class App extends Component {
     };
   }
 
+  addTrack(track) {
+    if 
+    (this.state.playlistTracks.find(savedTrack => savedTrack.id === track.id)) {
+      return;
+    }
+    else {
+      this.state.playlistTracks.push(track);
+      this.addTrack = this.addTrack.bind(this);
+    }
+  }
+
   render() {
     return (
       <div>
@@ -61,7 +72,9 @@ class App extends Component {
         <div className="App">
           <SearchBar />
           <div className="App-playlist">
-            <SearchResults searchResults={this.state.searchResults} />
+            <SearchResults 
+              searchResults={this.state.searchResults} 
+              onAdd={this.addTrack} />
             <Playlist playlistName={this.state.playlistName} playlistTracks={this.state.playlistTracks} />
           </div>
         </div>

@@ -2,13 +2,20 @@ import React from 'react';
 import './Track.css';
 
 class Track extends React.Component {
-    renderAction () {
+    constructor(props) {
+        super(props);
+        this.addTrack = this.addTrack.bind(this);
+    }
+
+    addTrack() {
+      this.props.onAdd(this.props.track);
+    }
+    
+    renderAction() {
         if(this.props.isRemoval) {
-            // eslint-disable-next-line
             return (<button className="Track-action" onClick={this.removeTrack}>-</button>);
         }
         else {
-            // eslint-disable-next-line
             return (<button className="Track-action" onClick={this.addTrack} >+</button>);
         }
 
