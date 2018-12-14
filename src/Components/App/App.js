@@ -44,12 +44,6 @@ class App extends Component {
           artist: 'Unknown',
           album: 'Unknown too',
           id: '1'
-        },
-        {
-          name: '',
-          artist: '',
-          album: '',
-          id: ''
         }
       ]
     };
@@ -66,15 +60,16 @@ class App extends Component {
       return;
     }
     else {
-      this.state.playlistTracks.push(track);
-
-      this.addTrack = this.addTrack.bind(this);
+      let copy = this.state.playlistTracks;
+      this.setState({
+        playlistTracks: copy.push(track)
+      });
     }
   }
 
   removeTrack(track) {
-      var tracks = this.state.playlistTracks;
-      const result = tracks.filter(savedTrack => savedTrack.id === track.id);
+      const tracks = this.state.playlistTracks;
+      const result = tracks.filter(savedTrack => savedTrack.id !== track.id);
       this.setState({
         playlistTracks: result
       });
@@ -88,7 +83,9 @@ class App extends Component {
   }
 
   search(term) {
-    console.log(term);
+    Spotify.search(term.then(searchResults => 
+      this.setState({ searchResults: searchResults })
+      ));
   }
 
   updatePlaylistName(name) {
