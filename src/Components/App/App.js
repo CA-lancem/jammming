@@ -5,6 +5,7 @@ import './App.css';
 import SearchBar from '../SearchBar/SearchBar';
 import SearchResults from '../SearchResults/SearchResults';
 import Playlist from '../Playlist/Playlist';
+import Spotify from '../../util/Spotify';
 
 class App extends Component {
   constructor(props) {
@@ -82,6 +83,8 @@ class App extends Component {
 
   savePlaylist(playlistTracks) {
     const trackURIs = [];
+    this.state.playlistTracks.forEach(track => trackURIs.push(track.uri));
+    
   }
 
   search(term) {
@@ -104,8 +107,7 @@ class App extends Component {
           <div className="App-playlist">
             <SearchResults 
               searchResults={this.state.searchResults} 
-              onAdd={this.addTrack}
-              onSearch={this.search} />
+              onAdd={this.addTrack} />
             <Playlist 
               playlistName={this.state.playlistName} 
               playlistTracks={this.state.playlistTracks}

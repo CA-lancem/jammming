@@ -6,14 +6,12 @@ import TrackList from '../TrackList/TrackList';
 class Playlist extends React.Component {
     constructor(props) {
         super(props);
-
         this.handleNameChange = this.handleNameChange.bind(this);
     }
 
     handleNameChange(event) {
-        this.setState({
-          playlistName: event.target.value
-        });
+        const name = e.target.value;
+        this.props.onNameChange(name);
     }
     
     render() {
