@@ -1,52 +1,27 @@
-import React, { Component } from 'react';
-// eslint-disable-next-line
-import logo from '../../logo.svg';
+import React from 'react';
 import './App.css';
 import SearchBar from '../SearchBar/SearchBar';
 import SearchResults from '../SearchResults/SearchResults';
 import Playlist from '../Playlist/Playlist';
 import Spotify from '../../util/Spotify';
 
-class App extends Component {
+class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       playlistName: 'Hello World',
       playlistTracks: [
-        {
-          name: 'Stronger',
-          artist: 'Britney Spears',
-          album: 'Oops!... I Did It Again',
-          id: '0'
-        },
-        {
-          name: 'So Emotional',
-          artist: 'Whitney Houston',
-          album: 'Whitney',
-          id: '1'
-        },
-        {
-          name: '',
-          artist: '',
-          album: '',
-          id: ''
-        }
+        {name: 'Tints', artist: 'Anderson .Paak', album: 'Oxnard', id: 14},
+        {name: 'Cheers', artist: 'Anderson .Paak', album: 'Oxnard', id: 13},
+        {name: 'Who R U?', artist: 'Anderson .Paak', album: 'Oxnard', id: 12},
       ],
       searchResults: [
-        {
-          name: 'Purple Rain',
-          artist: 'Jimi Hendrix',
-          album: 'Seattle',
-          id: '0'
-        },
-        {
-          name: 'Purple People Eater',
-          artist: 'Unknown',
-          album: 'Unknown too',
-          id: '1'
-        }
+        {name: 'Buffalo Soldier', artist: 'Bob Marley', album: 'Bob Marley: Greatest Hits', id: 4},
+        {name: '3 Little Birds', artist: 'Bob Marley', album: 'Bob Marley: Greatest Hits', id: 3},
+        {name: 'No Woman, No Cry', artist: 'Bob Marley', album: 'Bob Marley: Greatest Hits', id: 2},
       ]
     };
+    
     this.addTrack = this.addTrack.bind(this);
     this.removeTrack = this.removeTrack.bind(this);
     this.updatePlaylistName = this.updatePlaylistName.bind(this);
@@ -55,14 +30,11 @@ class App extends Component {
   }
 
   addTrack(track) {
-    if 
-    (this.state.playlistTracks.find(savedTrack => savedTrack.id === track.id)) {
+    if (this.state.playlistTracks.find(savedTrack => savedTrack.id === track.id)) {
       return;
-    }
-    else {
-      let copy = this.state.playlistTracks;
+    } else {
       this.setState({
-        playlistTracks: copy.push(track)
+        playlistTracks: this.state.playlistTracks.concat([track])
       });
     }
   }
@@ -76,18 +48,23 @@ class App extends Component {
 
   }
 
-  savePlaylist(playlistTracks) {
-    const trackURIs = [];
-    this.state.playlistTracks.forEach(track => trackURIs.push(track.uri));
+  savePlaylist() {
+    const trackURIs = this.state.playlistTracks.map(track => track.uri);
+    //this.state.playlistTracks.forEach(track => trackURIs.concat(track.uri));
+    Spotify.savePlaylist(this.state.playlistName, trackURIs).then(() => {
+      this.setState({
+        playlistName: 'New Playlist',
+        playlistTracks: []
+      });
+    } );
     
   }
 
   search(term) {
-    Spotify.search(term.then(searchResults => 
-      this.setState({ searchResults: searchResults })
-      ));
+    Spotify.search(term).then(searchResults => 
+      this.setState({ searchResults: searchResults }));
   }
-
+  
   updatePlaylistName(name) {
     this.setState({
       playlistName: name
