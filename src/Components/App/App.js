@@ -10,16 +10,8 @@ class App extends React.Component {
     super(props);
     this.state = {
       playlistName: 'Hello World',
-      playlistTracks: [
-        {name: 'Tints', artist: 'Anderson .Paak', album: 'Oxnard', id: 14},
-        {name: 'Cheers', artist: 'Anderson .Paak', album: 'Oxnard', id: 13},
-        {name: 'Who R U?', artist: 'Anderson .Paak', album: 'Oxnard', id: 12},
-      ],
-      searchResults: [
-        {name: 'Buffalo Soldier', artist: 'Bob Marley', album: 'Bob Marley: Greatest Hits', id: 4},
-        {name: '3 Little Birds', artist: 'Bob Marley', album: 'Bob Marley: Greatest Hits', id: 3},
-        {name: 'No Woman, No Cry', artist: 'Bob Marley', album: 'Bob Marley: Greatest Hits', id: 2},
-      ]
+      playlistTracks: [],
+      searchResults: []
     };
     
     this.addTrack = this.addTrack.bind(this);
